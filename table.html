@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table id="a" border="5">
+        <tr>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>country_name</th>
+            <th>subject_name</th>
+            <th>DELETE</th>
+        </tr>
+    </table>
+
+
+
+    <script>
+        async function a() {
+            var r = await fetch('http://localhost:3000/api');
+            var jsondata = await r.json();
+            for (i in jsondata) {
+                document.getElementById('a').innerHTML += `<tr>
+    <td>${jsondata[i].first_name}</td>
+    <td>${jsondata[i].last_name}</td>
+    <td>${jsondata[i].country_name}</td>
+    <td>${jsondata[i].subject_name}</td>
+    <td><button onclick="del(${jsondata[i].id})">Delete</button></td>
+</tr>`
+            }
+        } a();
+
+
+        function del(id) {
+            fetch(`http://localhost:3000/api/${id}`,
+                {
+                    headers: {
+                          'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "DELETE",
+                })
+            window.location.reload()
+        }
+
+    </script>
+</body>
+
+</html>
